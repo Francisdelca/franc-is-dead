@@ -1,0 +1,102 @@
+---
+import Header from "@components/layout/Header.astro";
+import Footer from "@components/layout/Footer.astro";
+import "@styles/global.css";
+
+interface Props {
+  title?: string;
+  description?: string;
+  image?: string;
+  canonicalPath?: string;
+  isSlideMode?: boolean;
+}
+
+const {
+  title = "franc.is.dead | Francis Del Castillo",
+  description = "Experiencias web, aplicaciones y sistemas digitales desarrollados por Francis Del Castillo.",
+  image = "/images/moodboard.png",
+  canonicalPath = Astro.url.pathname,
+  isSlideMode = false,
+} = Astro.props;
+
+const canonical = new URL(canonicalPath, Astro.site ?? Astro.url.origin).toString();
+const imageUrl = new URL(image, Astro.site ?? Astro.url.origin).toString();
+
+const pageShape = (() => {
+  const path = Astro.url.pathname;
+  if (path === "/" || path === "/index.html") return "signature";
+  if (path.startsWith("/about")) return "f";
+  if (path.startsWith("/projects")) return "spider";
+  if (path.startsWith("/experience")) return "circuit";
+  if (path.startsWith("/contact")) return "question";
+  return "signature";
+})();
+
+const personSchema = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: "Francis Del Castillo",
+  jobTitle: "Desarrollador creativo",
+  address: {
+    "@type": "PostalAddress",
+    addressCountry: "PE",
+  },
+  knowsAbout: [
+    "Frontend",
+    "JavaScript",
+    "Astro",
+    "Vue.js",
+    "Nuxt",
+    "Interacción digital",
+    "Dirección creativa",
+    "Integraciones web",
+    "Productos digitales",
+  ],
+};
+---
+
+<!doctype html>
+<html lang="es" class:list={{ "is-slide-mode": isSlideMode }}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" href="/assets/dot-grid.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="/assets/phosphor-thin/style.css" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={imageUrl} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={imageUrl} />
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(personSchema)} />
+  </head>
+  <body>
+    <div class="grain" aria-hidden="true"></div>
+    <Header dotShape={pageShape} />
+    <main id="top">
+      <slot />
+    </main>
+    <Footer />
+    <script is:inline src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+    <script is:inline src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+    <script>
+      import { initSite } from "../scripts/site";
+
+      const boot = () => initSite();
+
+      if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", boot, { once: true });
+      } else {
+        boot();
+      }
+
+      document.addEventListener("astro:page-load", boot);
+    </script>
+  </body>
+</html>

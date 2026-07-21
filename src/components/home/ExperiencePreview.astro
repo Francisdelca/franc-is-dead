@@ -1,0 +1,20 @@
+---
+import SectionHeader from "@components/shared/SectionHeader.astro";
+import { experience } from "@data/experience";
+---
+
+<section class="work-section experience-preview" aria-labelledby="experience-title">
+  <SectionHeader index="05" label="Experiencia" title="Trabajo técnico en proyectos reales, completos y colaborativos." id="experience-title" />
+  <div class="experience-list">
+    {experience.map((item) => (
+      <article class="experience-item" data-reveal>
+        <span>{item.period}</span>
+        <h3>{item.company}</h3>
+        <p>{item.summary}</p>
+        <ul>
+          {item.responsibilities.slice(0, 5).map((responsibility) => <li>{responsibility}</li>)}
+        </ul>
+      </article>
+    ))}
+  </div>
+</section>

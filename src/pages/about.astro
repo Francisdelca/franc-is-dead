@@ -1,0 +1,38 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import ContactCTA from "@components/home/ContactCTA.astro";
+import MorphingDots from "@components/shared/MorphingDots.astro";
+---
+
+<BaseLayout
+  title="Sobre mí | Francis Del Castillo"
+  description="Sobre Francis Del Castillo y franc.is.dead: desarrollo creativo, frontend, interacción y productos digitales."
+  canonicalPath="/about/"
+>
+  <section class="page-hero about-hero" aria-labelledby="about-title">
+    <p class="eyebrow" data-reveal>Sobre mí</p>
+    <h1 id="about-title" data-split>Francis es la persona. franc.is.dead es la práctica.</h1>
+    <MorphingDots shape="f" size="lg" class="about-hero__mark" />
+  </section>
+  <section class="approach-section">
+    <div class="section-grid">
+      <div class="system-copy" data-reveal>
+        <p>
+          Soy Francis Del Castillo, desarrollador creativo independiente en Perú. En 2026 retomé la práctica independiente para construir sitios, aplicaciones y sistemas para clientes y equipos que trabajan de forma remota.
+        </p>
+        <p>
+          Empecé trabajando de forma independiente mientras estudiaba Desarrollo de Software en SENATI Pucallpa, de donde egresé. Entre 2021 y 2025 formé parte de Ludik: ingresé como frontend developer y, desde mediados de 2023, asumí liderazgo de proyectos, coordinación con clientes y responsabilidades full-stack cada vez más amplias.
+        </p>
+      </div>
+      <div class="system-copy" data-reveal>
+        <p>
+          Esa experiencia me dio profundidad full-stack, pero también me alejó durante un tiempo de la parte creativa que más disfruto. franc.is.dead es el espacio donde vuelvo a reunir interacción, criterio visual y tecnología.
+        </p>
+        <p>
+          Me interesan especialmente la cultura, la música, la pintura, la fotografía, la moda, la arquitectura y las marcas alternativas. Busco colaboraciones donde una experiencia digital pueda tener atmósfera, tensión y una razón para existir.
+        </p>
+      </div>
+    </div>
+  </section>
+  <ContactCTA />
+</BaseLayout>

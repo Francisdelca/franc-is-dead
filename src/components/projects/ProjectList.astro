@@ -1,0 +1,55 @@
+---
+import ProjectCard from "./ProjectCard.astro";
+import type { TechnologyId } from "@data/technologies";
+
+interface Props {
+  label?: string;
+  previewId?: string;
+  projects: Array<{
+    id: string;
+    data: {
+      title: string;
+      variant?: string;
+      year?: number;
+      category: string;
+      role: string;
+      status: string;
+      summary?: string;
+      description: string;
+      technologies: TechnologyId[];
+      cover?: string;
+      thumbnail?: string;
+      gallery?: Array<{
+        src: string;
+        label: string;
+        alt: string;
+        orientation: "landscape" | "portrait";
+      }>;
+      featured: boolean;
+      caseStudyReady: boolean;
+    };
+  }>;
+}
+
+const { projects, label = "Casos de estudio", previewId = "projectPreview" } = Astro.props;
+const firstProjectWithPreview = projects.find((project) =>
+  project.data.gallery?.[0]?.src || project.data.thumbnail || project.data.cover
+);
+const initialPreview = firstProjectWithPreview
+  ? firstProjectWithPreview.data.gallery?.[0]?.src
+    ?? firstProjectWithPreview.data.thumbnail
+    ?? firstProjectWithPreview.data.cover
+  : undefined;
+---
+
+<div class="project-list-group" data-project-list-group>
+  <div class="project-list" aria-label={label}>
+    {projects.map((project, index) => <ProjectCard project={project} index={index} />)}
+  </div>
+  <div class="project-preview" id={previewId} aria-hidden="true">
+    <img src={initialPreview} alt="" loading="lazy" data-project-preview-image />
+    <span class="project-preview__shade"></span>
+    <span class="project-preview__number" data-project-preview-number>01</span>
+    <small data-project-preview-title>Proyecto</small>
+  </div>
+</div>

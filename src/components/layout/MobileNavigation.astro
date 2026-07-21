@@ -1,0 +1,26 @@
+---
+import { navigation } from "@data/navigation";
+import { files } from "@data/files";
+---
+
+<button
+  class="mobile-menu-toggle"
+  type="button"
+  aria-label="Abrir navegación"
+  aria-expanded="false"
+  aria-controls="mobile-navigation"
+  data-menu-toggle
+>
+  <span></span>
+  <span></span>
+</button>
+
+<nav class="mobile-nav" id="mobile-navigation" aria-label="Navegación móvil" data-mobile-nav hidden>
+  {navigation.map((item) => (
+    item.download && !files.cvAvailable ? (
+      <span aria-disabled="true">{item.label} · pendiente</span>
+    ) : (
+      <a href={item.href} download={item.download ? true : undefined}>{item.label}</a>
+    )
+  ))}
+</nav>

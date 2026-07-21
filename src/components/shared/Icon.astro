@@ -1,0 +1,13 @@
+---
+interface Props {
+  name: string;
+  weight?: "thin" | "light" | "regular" | "bold" | "fill" | "duotone";
+  class?: string;
+  label?: string;
+}
+
+const { name, weight = "thin", class: className = "", label } = Astro.props;
+const iconClass = `ph${weight === "regular" ? "" : `-${weight}`} ph-${name}`;
+---
+
+<i class:list={[iconClass, className]} aria-hidden={label ? undefined : "true"} aria-label={label}></i>

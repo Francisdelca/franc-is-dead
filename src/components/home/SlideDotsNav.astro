@@ -1,0 +1,23 @@
+---
+const slides = [
+  { id: "slide-opening", label: "Inicio" },
+  { id: "slide-profile", label: "Perfil" },
+  { id: "slide-projects", label: "Casos de estudio" },
+  { id: "slide-experience", label: "Experiencia" },
+  { id: "slide-expertise", label: "Expertise" },
+  { id: "slide-contact", label: "Contacto" },
+];
+---
+
+<nav class="slide-dots-nav" aria-label="Navegación de diapositivas">
+  {slides.map((slide, i) => (
+    <a
+      href={`#${slide.id}`}
+      class="slide-dots-nav__item"
+      data-slide-target={i}
+      aria-label={slide.label}
+    >
+      <span class="slide-dots-nav__dot" />
+    </a>
+  ))}
+</nav>

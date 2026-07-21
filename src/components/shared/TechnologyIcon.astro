@@ -1,0 +1,26 @@
+---
+import { technologies, type TechnologyId } from "@data/technologies";
+
+interface Props {
+  id: TechnologyId;
+  size?: "default" | "compact";
+}
+
+const { id, size = "default" } = Astro.props;
+const technology = technologies[id];
+---
+
+<span
+  class:list={["technology-icon", { "technology-icon--compact": size === "compact" }]}
+  role="img"
+  aria-label={technology.label}
+  data-label={technology.label}
+>
+  {technology.icon ? (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d={technology.icon.path}></path>
+    </svg>
+  ) : (
+    <span class="technology-icon__monogram" aria-hidden="true">{technology.monogram}</span>
+  )}
+</span>

@@ -1,0 +1,33 @@
+---
+import { navigation } from "@data/navigation";
+import { files } from "@data/files";
+
+const currentPath = Astro.url.pathname;
+const normalize = (href: string) => (href === "/" ? "/" : href.replace(/\/$/, ""));
+const isCurrent = (href: string) => {
+  if (href.startsWith("/francis-del-castillo-cv")) return false;
+  const normalizedHref = normalize(href);
+  const normalizedPath = normalize(currentPath);
+  return normalizedHref === "/"
+    ? normalizedPath === "/"
+    : normalizedPath === normalizedHref || normalizedPath.startsWith(`${normalizedHref}/`);
+};
+---
+
+<nav class="nav" aria-label="Navegación principal">
+  {navigation.map((item) => (
+    item.download && !files.cvAvailable ? (
+      <span class="nav-disabled" aria-disabled="true" title="CV pendiente de agregar">
+        {item.label}
+      </span>
+    ) : (
+      <a
+        href={item.href}
+        aria-current={isCurrent(item.href) ? "page" : undefined}
+        download={item.download ? true : undefined}
+      >
+        {item.label}
+      </a>
+    )
+  ))}
+</nav>

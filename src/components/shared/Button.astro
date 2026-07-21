@@ -1,0 +1,18 @@
+---
+interface Props {
+  href: string;
+  variant?: "primary" | "ghost";
+  download?: boolean;
+  class?: string;
+}
+
+const { href, variant = "ghost", download = false, class: className = "" } = Astro.props;
+---
+
+<a
+  class:list={["button", `button-${variant}`, className]}
+  href={href}
+  download={download ? true : undefined}
+>
+  <slot />
+</a>

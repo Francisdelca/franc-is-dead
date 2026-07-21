@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://franc.is.dead/sitemap-index.xml

@@ -1,0 +1,42 @@
+body {
+  font-family: var(--font-sans);
+  letter-spacing: 0;
+}
+
+.eyebrow,
+.section-label,
+.panel-kicker {
+  color: var(--muted);
+  font-size: 0.76rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.hero h1,
+.page-hero h1,
+.project-hero h1,
+.section-heading h2,
+.work-heading h2,
+.approach-section h2,
+.contact-panel h2 {
+  margin: 0;
+  font-weight: 400;
+  letter-spacing: 0;
+}
+
+.system-copy p,
+.work-heading p,
+.section-heading p,
+.contact-panel p,
+.type-panel p,
+.voice-panel li,
+.page-hero p,
+.project-hero p,
+.project-metadata p,
+.project-section li,
+.experience-item p,
+.experience-item li {
+  color: var(--bone-soft);
+  font-size: 1rem;
+  line-height: 1.65;
+}

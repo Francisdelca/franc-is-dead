@@ -1,0 +1,48 @@
+---
+import Button from "@components/shared/Button.astro";
+import { profile } from "@data/profile";
+import { files } from "@data/files";
+---
+
+<section class="hero" aria-labelledby="hero-title">
+  <div class="hero-copy">
+    <p class="eyebrow" data-reveal>WordPress / frontend / productos digitales</p>
+    <h1 id="hero-title" data-split>{profile.name}</h1>
+    <p class="hero-role" data-reveal>{profile.role}.</p>
+    <p class="hero-text" data-reveal>
+      Más de cinco años desarrollando sitios web, plataformas y aplicaciones. Me especializo en crear soluciones personalizadas, integrar servicios externos y resolver necesidades que van más allá de una implementación estándar.
+    </p>
+    <p class="hero-text hero-text--compact" data-reveal>
+      Desarrollo experiencias digitales donde el diseño, la tecnología y la lógica de negocio funcionan como una sola pieza.
+    </p>
+    <div class="hero-actions" data-reveal>
+      <Button href="/projects/" variant="primary">Ver casos de estudio</Button>
+      {files.cvAvailable ? (
+        <Button href={profile.cvUrl} download>Descargar CV</Button>
+      ) : (
+        <span class="contact-placeholder">CV pendiente</span>
+      )}
+      <Button href="/contact/">Contactar</Button>
+    </div>
+    <ul class="hero-facts" data-reveal>
+      <li>5+ años de experiencia profesional</li>
+      <li>WordPress personalizado</li>
+      <li>Frontend e integraciones</li>
+      <li>Productos digitales</li>
+      <li>{profile.location} · {profile.availability.toLowerCase()}</li>
+    </ul>
+  </div>
+
+  <aside class="featured-stage" aria-label="Proyecto destacado" data-reveal>
+    <div class="stage-media">
+      <img src="/images/moodboard.png" alt="Collage visual de referencia de franc.is.dead" />
+    </div>
+    <div class="stage-caption">
+      <span>Featured slot</span>
+      <strong>WordPress personalizado</strong>
+      <p>
+        Sitios administrables, plugins, integraciones y arquitecturas headless con criterio visual.
+      </p>
+    </div>
+  </aside>
+</section>

@@ -1,0 +1,272 @@
+---
+import { getCollection } from "astro:content";
+import Slide from "./Slide.astro";
+import SlideDotsNav from "./SlideDotsNav.astro";
+import Icon from "@components/shared/Icon.astro";
+import Button from "@components/shared/Button.astro";
+import TechnologyIcon from "@components/shared/TechnologyIcon.astro";
+import { profile } from "@data/profile";
+import { files } from "@data/files";
+import { experience } from "@data/experience";
+
+const allProjects = (await getCollection("projects"))
+  .filter((project) => project.data.published);
+
+const projects = allProjects
+  .filter((project) => project.data.featured)
+  .sort((a, b) => (a.data.featuredOrder ?? 999) - (b.data.featuredOrder ?? 999))
+  .slice(0, 4);
+
+const firstFeaturedWithPreview = projects.find((project) =>
+  project.data.gallery?.[0]?.src || project.data.thumbnail || project.data.cover
+);
+const initialFeaturedPreview = firstFeaturedWithPreview
+  ? firstFeaturedWithPreview.data.gallery?.[0]?.src
+    ?? firstFeaturedWithPreview.data.thumbnail
+    ?? firstFeaturedWithPreview.data.cover
+  : undefined;
+
+const experienceItems = experience.map((item) => ({
+  ...item,
+  projectCount: allProjects.filter((project) => project.data.experienceId === item.id).length,
+}));
+
+const socialProfiles = [
+  { label: "LinkedIn", url: profile.linkedin },
+  { label: "GitHub", url: profile.github },
+];
+
+const expertiseCards = [
+  {
+    icon: "browser",
+    title: "Frontend & interacción",
+    items: ["Astro, Vue y Nuxt", "GSAP y Lottie", "Canvas y SVG", "Movimiento con intención"],
+  },
+  {
+    icon: "plugs-connected",
+    title: "Apps & sistemas",
+    items: ["Aplicaciones web y móviles", "Tiempo real y geolocalización", "Integraciones y automatización", "IA aplicada"],
+  },
+  {
+    icon: "code",
+    title: "De interfaz a infraestructura",
+    items: ["Backend y datos", "Cloudflare y AWS", "Arquitecturas desacopladas", "Despliegue y soporte"],
+  },
+];
+---
+
+<div class="home-experience" data-home-experience>
+  <SlideDotsNav />
+  <div class="home-stage" data-home-stage>
+
+<Slide index={0} id="slide-opening" class="slide-opening" headerShape="signature" reveal="base">
+  <div class="slide-opening__portrait" data-portrait-treatment="editorial" data-reveal>
+    <h1 class="slide-opening__name" data-split>{profile.name}</h1>
+
+    <aside class="slide-opening__quick-contact" aria-label="Contacto rápido">
+      <div class="slide-opening__availability">
+        <span>Disponible para proyectos freelance y colaboraciones remotas</span>
+        <strong>{profile.location} · {profile.availability}</strong>
+      </div>
+      <nav class="slide-opening__socials" aria-label="Redes sociales">
+        <a class="slide-opening__email" href={`mailto:${profile.email}`}>
+          {profile.email}
+        </a>
+        {socialProfiles.map((social) => social.url ? (
+          <a href={social.url} target="_blank" rel="noreferrer">
+            {social.label}
+            <Icon name="arrow-up-right" />
+          </a>
+        ) : (
+          <span class="slide-opening__social-pending" aria-label={`${social.label}, enlace pendiente`}>
+            {social.label}
+          </span>
+        ))}
+      </nav>
+    </aside>
+
+    <figure class="slide-opening__figure">
+      <div class="slide-opening__portrait-crop">
+        <img
+          src="/images/portraits/francis-02-cutout.png"
+          alt="Francis del Castillo de perfil, mirando hacia la izquierda"
+          width="1086"
+          height="1448"
+          fetchpriority="high"
+        />
+      </div>
+    </figure>
+  </div>
+
+  <aside class="slide-opening__copy slide-opening__panel" data-reveal>
+    <span class="slide-opening__panel-kicker">franc.is.dead · código, imagen y sistemas</span>
+    <h2 class="slide-opening__panel-title">Ideas que necesitan<br />una forma propia.</h2>
+    <p class="slide-opening__panel-copy">
+      Diseño y desarrollo sitios, experiencias y productos digitales a medida. Trabajo entre frontend, interacción y tecnología para construir cosas que funcionen, tengan carácter y puedan sostenerse en el tiempo.
+    </p>
+    <dl class="slide-opening__details">
+      <div>
+        <dt>Experiencia</dt>
+        <dd>5+ años</dd>
+      </div>
+      <div>
+        <dt>Modalidad</dt>
+        <dd>{profile.availability}</dd>
+      </div>
+    </dl>
+    <div class="slide-actions">
+      <Button href="#slide-projects" variant="primary">Ver trabajo</Button>
+      <Button href="/contact/">Cuéntame tu proyecto</Button>
+    </div>
+  </aside>
+</Slide>
+
+<Slide index={1} id="slide-profile" class="slide-profile" theme="cyan" headerShape="f" reveal="split">
+  <div>
+    <span class="slide-label" data-reveal>this.is.me</span>
+    <h2 class="slide-title" data-split data-reveal>Frontend, interacción y dirección creativa.</h2>
+    <p class="slide-lead" data-reveal>
+      Soy Francis Del Castillo. Trabajo bajo franc.is.dead y combino criterio visual con experiencia construyendo productos completos, desde la interfaz hasta la infraestructura.
+    </p>
+    <div class="slide-actions" data-reveal>
+      <Button href="/about/">Sobre mí</Button>
+      <Button href="/experience/">Experiencia</Button>
+    </div>
+  </div>
+  <ul class="slide-profile__facts" data-reveal>
+    <li><Icon name="briefcase" /> 5+ años de experiencia</li>
+    <li><Icon name="globe" /> {profile.location} · {profile.availability.toLowerCase()}</li>
+    <li><Icon name="wrench" /> Astro, Nuxt e interacción frontend</li>
+    <li><Icon name="lightbulb" /> Dirección creativa y productos digitales</li>
+  </ul>
+</Slide>
+
+<Slide index={2} id="slide-projects" class="slide-projects" theme="light" headerShape="spider" reveal="circle">
+  <span class="slide-label" data-reveal>Websites & experiences · Apps & systems</span>
+  <h2 class="slide-title" data-split data-reveal>Trabajo seleccionado.</h2>
+  <div class="slide-projects__group" data-project-list-group>
+  <div class="slide-projects__list" data-reveal>
+    {projects.map((project, i) => (
+      (() => {
+        const number = String(i + 1).padStart(2, "0");
+        const previewImage = project.data.gallery?.[0]?.src ?? project.data.thumbnail ?? project.data.cover;
+
+        return (
+      <a
+        class="slide-projects__item"
+        href={`/projects/${project.id}/`}
+        data-project-preview-item
+        data-project-preview-src={previewImage}
+        data-project-preview-number={number}
+        data-project-preview-title={project.data.title}
+      >
+        {previewImage && (
+          <figure class="slide-projects__item-media" aria-hidden="true">
+            <img src={previewImage} alt="" loading="lazy" />
+          </figure>
+        )}
+        <Icon name="arrow-right" />
+        <h3 class="slide-projects__title">{project.data.title}</h3>
+        <span class="slide-projects__meta">
+          <span>{project.data.category}</span>
+          {project.data.technologies.length > 0 && (
+            <span class="slide-projects__technologies" aria-label="Tecnologías principales">
+              {project.data.technologies.map((technology) => (
+                <TechnologyIcon id={technology} size="compact" />
+              ))}
+            </span>
+          )}
+        </span>
+      </a>
+        );
+      })()
+    ))}
+  </div>
+  <div class="project-preview slide-projects__preview" aria-hidden="true">
+    <img src={initialFeaturedPreview} alt="" loading="lazy" data-project-preview-image />
+    <span class="project-preview__shade"></span>
+    <span class="project-preview__number" data-project-preview-number>01</span>
+    <small data-project-preview-title>Proyecto</small>
+  </div>
+  </div>
+  <div class="slide-actions" data-reveal>
+    <Button href="/projects/#web-experiences" variant="primary">Experiencias web</Button>
+    <Button href="/projects/#apps-systems">Apps y sistemas</Button>
+  </div>
+</Slide>
+
+<Slide index={3} id="slide-experience" class="slide-experience" theme="cyan" headerShape="x" reveal="split">
+  <span class="slide-label" data-reveal>Experiencia</span>
+  <h2 class="slide-title" data-split data-reveal>El contexto también forma parte del trabajo.</h2>
+  <div class="slide-experience__grid" data-reveal>
+    {experienceItems.map((item) => (
+      <article class="slide-experience__item">
+        <div>
+          <h3>{item.company}</h3>
+          <span>{item.role}</span>
+        </div>
+        <p>{item.summary}</p>
+        {item.projectCount > 0 && (
+          <a href={`/experience/#${item.id}`}>
+            {item.projectCount} {item.projectCount === 1 ? "caso relacionado" : "casos relacionados"}
+            <Icon name="arrow-up-right" />
+          </a>
+        )}
+      </article>
+    ))}
+  </div>
+  <div class="slide-actions" data-reveal>
+    <Button href="/experience/">Ver experiencia completa</Button>
+  </div>
+</Slide>
+
+<Slide index={4} id="slide-expertise" class="slide-expertise" theme="blood" headerShape="circuit" reveal="rise">
+  <span class="slide-label" data-reveal>Expertise</span>
+  <h2 class="slide-title" data-split data-reveal>La experiencia al frente. El sistema detrás.</h2>
+  <p class="slide-lead" data-reveal>
+    Mi práctica se concentra en frontend, interacción y dirección creativa, respaldada por experiencia real en backend, arquitectura e infraestructura.
+  </p>
+  <div class="slide-expertise__grid" data-reveal>
+    {expertiseCards.map((card) => (
+      <article class="slide-expertise__card">
+        <Icon name={card.icon} />
+        <h3>{card.title}</h3>
+        <ul>
+          {card.items.map((item) => <li>{item}</li>)}
+        </ul>
+      </article>
+    ))}
+  </div>
+</Slide>
+
+<Slide index={5} id="slide-contact" class="slide-contact" headerShape="circle" reveal="iris">
+  <div>
+    <span class="slide-label" data-reveal>Contacto</span>
+    <h2 class="slide-title" data-split data-reveal>Trabajemos juntos.</h2>
+    <p class="slide-lead" data-reveal>
+      Disponible para proyectos freelance y oportunidades remotas en países hispanohablantes.
+    </p>
+    <div class="slide-actions" data-reveal>
+      {profile.email ? (
+        <Button href={`mailto:${profile.email}`} variant="primary">{profile.email}</Button>
+      ) : (
+        <span class="contact-placeholder">Correo por completar</span>
+      )}
+      {profile.linkedin && <Button href={profile.linkedin}>LinkedIn</Button>}
+      {profile.github && <Button href={profile.github}>GitHub</Button>}
+      {files.cvAvailable ? (
+        <Button href={profile.cvUrl} download>Descargar CV</Button>
+      ) : (
+        <span class="contact-placeholder">CV pendiente</span>
+      )}
+      <Button href="/contact/">Contacto</Button>
+    </div>
+  </div>
+  <ul class="slide-contact__links" data-reveal>
+    <li><a href="/projects/"><Icon name="folder" /> Casos de estudio</a></li>
+    <li><a href="/experience/"><Icon name="scroll" /> Experiencia</a></li>
+    <li><a href="/about/"><Icon name="user" /> Sobre mí</a></li>
+  </ul>
+</Slide>
+  </div>
+</div>

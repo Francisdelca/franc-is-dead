@@ -1,0 +1,17 @@
+---
+interface Props {
+  title: string;
+  items?: string[];
+}
+
+const { title, items = [] } = Astro.props;
+---
+
+{items.length > 0 && (
+  <section class="project-section" data-reveal>
+    <h2>{title}</h2>
+    <ul>
+      {items.map((item) => <li>{item}</li>)}
+    </ul>
+  </section>
+)}

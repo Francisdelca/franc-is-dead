@@ -1,0 +1,115 @@
+---
+import TechnologyIcon from "@components/shared/TechnologyIcon.astro";
+import Icon from "@components/shared/Icon.astro";
+import type { TechnologyId } from "@data/technologies";
+
+interface Props {
+  technologies: TechnologyId[];
+  participation?: string;
+  collaborationNote?: string;
+  experience?: {
+    id: string;
+    company: string;
+    type: "employment" | "independent";
+  };
+  contextDescription?: string;
+  collaborators?: Array<{
+    role: string;
+    contribution: string;
+    collaborator: {
+      name: string;
+      profiles: Array<{ label: string; url: string }>;
+    };
+  }>;
+  archiveNote?: string;
+  disclaimer?: string;
+  externalUrl?: string;
+}
+
+const {
+  technologies,
+  participation,
+  collaborationNote,
+  experience,
+  contextDescription,
+  collaborators = [],
+  archiveNote,
+  disclaimer,
+  externalUrl,
+} = Astro.props;
+---
+
+<aside class="project-metadata" data-reveal>
+  {(experience || contextDescription) && (
+    <div>
+      <h2>Contexto</h2>
+      {experience && (
+        <p>
+          <a class="metadata-link" href={`/experience/#${experience.id}`}>
+            {experience.type === "employment" ? `Durante mi etapa en ${experience.company}` : experience.company}
+          </a>
+        </p>
+      )}
+      {contextDescription && <p>{contextDescription}</p>}
+    </div>
+  )}
+  {participation && (
+    <div>
+      <h2>Participación</h2>
+      <p>{participation}</p>
+    </div>
+  )}
+  {collaborationNote && (
+    <div>
+      <h2>Colaboración</h2>
+      <p>{collaborationNote}</p>
+    </div>
+  )}
+  {collaborators.length > 0 && (
+    <div>
+      <h2>Colaboradores</h2>
+      <ul class="collaborator-list">
+        {collaborators.map(({ collaborator, role, contribution }) => (
+          <li>
+            {collaborator.profiles[0] ? (
+              <a
+                class="collaborator-name-link"
+                href={collaborator.profiles[0].url}
+                target="_blank"
+                rel="noreferrer"
+              >
+                <strong>{collaborator.name}</strong>
+                <Icon name="arrow-up-right" />
+              </a>
+            ) : (
+              <strong>{collaborator.name}</strong>
+            )}
+            <span>{role}</span>
+            <p>{contribution}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  )}
+  {archiveNote && (
+    <div>
+      <h2>Archivo</h2>
+      <p>{archiveNote}</p>
+    </div>
+  )}
+  {disclaimer && (
+    <div>
+      <h2>Nota</h2>
+      <p>{disclaimer}</p>
+    </div>
+  )}
+  {technologies.length > 0 && (
+    <div>
+      <h2>Tecnologías</h2>
+      <ul class="technology-list" aria-label="Tecnologías principales del proyecto">
+        {technologies.map((item) => <li><TechnologyIcon id={item} /></li>)}
+      </ul>
+    </div>
+  )}
+  {externalUrl && <a class="button button-primary" href={externalUrl} target="_blank" rel="noreferrer">Ver proyecto</a>}
+</aside>

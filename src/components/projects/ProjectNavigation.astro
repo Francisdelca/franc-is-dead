@@ -1,0 +1,13 @@
+---
+interface Props {
+  previous?: { id: string; title: string };
+  next?: { id: string; title: string };
+}
+
+const { previous, next } = Astro.props;
+---
+
+<nav class="project-navigation" aria-label="Navegación entre casos de estudio">
+  {previous ? <a href={`/projects/${previous.id}/`}>Anterior · {previous.title}</a> : <span></span>}
+  {next ? <a href={`/projects/${next.id}/`}>Siguiente · {next.title}</a> : <span></span>}
+</nav>

@@ -1,0 +1,10 @@
+---
+import BrandLogo from "@components/shared/BrandLogo.astro";
+import { profile } from "@data/profile";
+---
+
+<footer class="footer">
+  <span>Portfolio / <span id="year"></span></span>
+  <span>{profile.location} · {profile.availability}</span>
+  <BrandLogo mode="signature" class="footer-signature" />
+</footer>

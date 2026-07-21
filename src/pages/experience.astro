@@ -1,0 +1,72 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "@layouts/BaseLayout.astro";
+import SectionHeader from "@components/shared/SectionHeader.astro";
+import TechnologyIcon from "@components/shared/TechnologyIcon.astro";
+import { experience } from "@data/experience";
+
+const projects = (await getCollection("projects"))
+  .filter((project) => project.data.published)
+  .sort((a, b) => (b.data.year ?? 0) - (a.data.year ?? 0));
+---
+
+<BaseLayout
+  title="Experiencia | Francis Del Castillo"
+  description="Experiencia profesional de Francis Del Castillo en frontend, productos digitales, sistemas e infraestructura."
+  canonicalPath="/experience/"
+>
+  <section class="page-hero" aria-labelledby="experience-title">
+    <p class="eyebrow" data-reveal>Experiencia profesional</p>
+    <h1 id="experience-title" data-split>De frontend a sistemas completos.</h1>
+    <p data-reveal>
+      Una trayectoria construida entre trabajo independiente, desarrollo de producto y liderazgo técnico.
+    </p>
+  </section>
+  <section class="approach-section">
+    <SectionHeader index="01" label="Trayectoria" />
+    <div class="experience-list experience-list--full">
+      {experience.map((item) => (
+        <article class="experience-item" id={item.id} data-reveal>
+          <span>{item.period}</span>
+          <h2>
+            {item.companyUrl ? (
+              <a href={item.companyUrl} target="_blank" rel="noreferrer">{item.company}</a>
+            ) : item.company}
+          </h2>
+          <p class="experience-role">{item.role}</p>
+          <p>{item.summary}</p>
+          <ul>
+            {item.responsibilities.map((responsibility) => <li>{responsibility}</li>)}
+          </ul>
+          {projects.some((project) => project.data.experienceId === item.id) && (
+            <div class="experience-projects">
+              <h3>Casos de estudio de esta etapa</h3>
+              <ul>
+                {projects
+                  .filter((project) => project.data.experienceId === item.id)
+                  .map((project) => (
+                    <li>
+                      <a href={`/projects/${project.id}/`}>
+                        <span>{project.data.year ?? "—"}</span>
+                        <strong>{[project.data.title, project.data.variant].filter(Boolean).join(" / ")}</strong>
+                        <small>
+                          <span>{project.data.role}</span>
+                          {project.data.technologies.length > 0 && (
+                            <span class="experience-project__technologies" aria-label="Tecnologías principales">
+                              {project.data.technologies.map((technology) => (
+                                <TechnologyIcon id={technology} size="compact" />
+                              ))}
+                            </span>
+                          )}
+                        </small>
+                      </a>
+                    </li>
+                  ))}
+              </ul>
+            </div>
+          )}
+        </article>
+      ))}
+    </div>
+  </section>
+</BaseLayout>

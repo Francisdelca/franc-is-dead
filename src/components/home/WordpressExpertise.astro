@@ -1,0 +1,35 @@
+---
+import SectionHeader from "@components/shared/SectionHeader.astro";
+import { creativeCapabilities } from "@data/skills";
+---
+
+<section class="approach-section expertise-section" aria-labelledby="creative-title">
+  <SectionHeader
+    index="03"
+    label="Práctica"
+    title="La experiencia al frente. El sistema detrás."
+    id="creative-title"
+  />
+  <div class="section-grid">
+    <div class="system-copy" data-reveal>
+      <p>
+        Desarrollo experiencias digitales donde frontend, interacción y dirección creativa trabajan como una sola pieza.
+      </p>
+    </div>
+    <div class="system-copy" data-reveal>
+      <p>
+        La práctica visible se apoya en experiencia real construyendo productos, integraciones, backend e infraestructura.
+      </p>
+    </div>
+  </div>
+  <div class="specimen-grid expertise-grid">
+    {creativeCapabilities.map((group) => (
+      <article class="type-panel" data-reveal>
+        <p class="panel-kicker">{group.title}</p>
+        <ul class="capability-list">
+          {group.items.map((item) => <li>{item}</li>)}
+        </ul>
+      </article>
+    ))}
+  </div>
+</section>

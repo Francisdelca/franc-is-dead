@@ -1,0 +1,63 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "@layouts/BaseLayout.astro";
+import ProjectList from "@components/projects/ProjectList.astro";
+
+const projects = (await getCollection("projects"))
+  .filter((project) => project.data.published)
+  .sort((a, b) => {
+    if (a.data.featured !== b.data.featured) return Number(b.data.featured) - Number(a.data.featured);
+    if ((a.data.featuredOrder ?? 999) !== (b.data.featuredOrder ?? 999)) {
+      return (a.data.featuredOrder ?? 999) - (b.data.featuredOrder ?? 999);
+    }
+    return (b.data.year ?? 0) - (a.data.year ?? 0);
+  });
+
+const projectTracks = [
+  {
+    id: "web-experiences",
+    label: "Websites & Experiences",
+    description: "Sitios, narrativas interactivas y experiencias digitales donde identidad, movimiento y tecnología se encuentran.",
+    projects: projects.filter((project) => project.data.track === "web"),
+  },
+  {
+    id: "apps-systems",
+    label: "Apps & Systems",
+    description: "Aplicaciones y sistemas completos: producto, tiempo real, geolocalización, backend e infraestructura.",
+    projects: projects.filter((project) => project.data.track === "systems"),
+  },
+  {
+    id: "independent-concepts",
+    label: "Independent Concepts",
+    description: "Exploraciones no oficiales desarrolladas para estudiar una identidad, una interacción o una posibilidad comercial.",
+    projects: projects.filter((project) => project.data.track === "concept"),
+  },
+].filter((track) => track.projects.length > 0);
+---
+
+<BaseLayout
+  title="Casos de estudio | Francis Del Castillo"
+  description="Experiencias web, aplicaciones, sistemas y conceptos independientes desarrollados por Francis Del Castillo."
+  canonicalPath="/projects/"
+>
+  <section class="page-hero" aria-labelledby="projects-title">
+    <p class="eyebrow" data-reveal>Casos de estudio</p>
+    <h1 id="projects-title" data-split>La experiencia visible. El sistema detrás.</h1>
+    <p data-reveal>
+      Trabajo seleccionado entre experiencias web, productos digitales y sistemas en producción.
+    </p>
+  </section>
+  {projectTracks.map((track, index) => (
+    <section class="work-section page-work" id={track.id} aria-labelledby={`${track.id}-title`}>
+      <div class="section-label" data-reveal>
+        <span>{String(index + 1).padStart(2, "0")}</span>
+        <span>{track.label}</span>
+      </div>
+      <div class="work-heading">
+        <h2 id={`${track.id}-title`} data-reveal>{track.label}</h2>
+        <p data-reveal>{track.description}</p>
+      </div>
+      <ProjectList projects={track.projects} label={track.label} previewId={`projectPreview-${track.id}`} />
+    </section>
+  ))}
+</BaseLayout>

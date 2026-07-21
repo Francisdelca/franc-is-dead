@@ -1,0 +1,34 @@
+---
+import Button from "@components/shared/Button.astro";
+import { files } from "@data/files";
+import { profile } from "@data/profile";
+---
+
+<section class="contact-section" id="contact" aria-labelledby="contact-title">
+  <div class="contact-panel" data-reveal>
+    <p class="eyebrow">Contacto</p>
+    <h2 id="contact-title">Hablemos</h2>
+    <p>
+      Disponible para proyectos freelance, colaboraciones y oportunidades remotas en países hispanohablantes.
+    </p>
+    <div class="contact-actions">
+      {profile.email ? (
+        <Button href={`mailto:${profile.email}`} variant="primary">{profile.email}</Button>
+      ) : (
+        <span class="contact-placeholder">Correo por completar</span>
+      )}
+      {profile.linkedin && <Button href={profile.linkedin}>LinkedIn</Button>}
+      {profile.github && <Button href={profile.github}>GitHub</Button>}
+      {files.cvAvailable ? (
+        <Button href={profile.cvUrl}>Descargar CV</Button>
+      ) : (
+        <span class="contact-placeholder">CV pendiente</span>
+      )}
+    </div>
+  </div>
+  <div class="contact-panel contact-panel--meta" data-reveal>
+    <p>{profile.location}</p>
+    <p>{profile.availability}</p>
+    <p>Frontend, interacción, aplicaciones y sistemas digitales.</p>
+  </div>
+</section>

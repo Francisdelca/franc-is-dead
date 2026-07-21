@@ -1,0 +1,21 @@
+node_modules/
+dist/
+.astro/
+.DS_Store
+output/
+CONTENT-PENDING.md
+
+# Archivos de trabajo y recursos fuente no utilizados por el sitio publicado.
+/assets/
+/designs/
+/QBO/
+/cocoglass/
+/kollana/
+/pnp24:7/
+/rctravel/
+/teamviajero/
+/*.png
+/*.jpg
+/index.html
+/styles.css
+/script.js

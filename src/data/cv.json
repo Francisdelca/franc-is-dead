@@ -1,0 +1,113 @@
+{
+  "profile": {
+    "name": "Francis Del Castillo",
+    "brand": "franc.is.dead",
+    "role": "Desarrollador creativo enfocado en frontend, interacción y productos digitales",
+    "location": "Perú",
+    "email": "francis@delca.dev",
+    "availability": "Solo remoto - países hispanohablantes",
+    "cvUrl": "/francis-del-castillo-cv.pdf",
+    "instagram": "",
+    "linkedin": "https://www.linkedin.com/in/francisdead/",
+    "github": "https://github.com/Francisdelca"
+  },
+  "summary": "Desarrollador creativo con más de cinco años de experiencia construyendo sitios, experiencias y productos digitales a medida. Combino frontend, interacción y criterio visual con experiencia full-stack, arquitectura e infraestructura. Trabajo de forma remota con clientes, estudios y equipos de países hispanohablantes.",
+  "experience": [
+    {
+      "id": "ludik",
+      "type": "employment",
+      "company": "Ludik",
+      "companyUrl": "https://ludik.pe/",
+      "role": "Frontend developer - liderazgo de proyectos y responsabilidades full-stack",
+      "period": "Feb 2021 - Nov 2025",
+      "summary": "Ingresé como frontend developer y, desde mediados de 2023, asumí progresivamente la coordinación técnica y operativa de proyectos, el contacto directo con clientes y responsabilidades full-stack.",
+      "responsibilities": [
+        "Coordinación habitual con clientes durante la definición, el desarrollo y el lanzamiento de los proyectos",
+        "Liderazgo de equipos de hasta tres personas, según las necesidades de cada proyecto",
+        "Decisiones de diseño, arquitectura, lógica de negocio y estrategia de lanzamiento",
+        "Desarrollo frontend y full-stack de experiencias web, aplicaciones, juegos y sistemas a medida",
+        "Despliegues, infraestructura, diagnóstico y resolución de incidencias",
+        "Durante casi un mes asumí de forma integral la gestión técnica, la comunicación con clientes y las entregas del equipo",
+        "Participación en Aitana, Polla Cristal, Reporte Verde y Pachacuy, entre investigación con IA, campañas gamificadas, análisis geoespacial y experiencias en tiempo real"
+      ],
+      "cvResponsibilities": [
+        "Desde mediados de 2023 coordiné proyectos, clientes y equipos flexibles de hasta tres personas.",
+        "Tomé decisiones de diseño, arquitectura, lógica de negocio, estrategia de lanzamiento y despliegue.",
+        "Desarrollé experiencias web, aplicaciones, juegos y sistemas a medida con responsabilidades frontend y full-stack.",
+        "Participé en Aitana, Polla Cristal, Reporte Verde y Pachacuy: IA aplicada, gamificación, análisis geoespacial y tiempo real."
+      ]
+    },
+    {
+      "id": "independent",
+      "type": "independent",
+      "company": "Experiencia independiente",
+      "role": "Desarrollo creativo, productos y sistemas digitales",
+      "period": "Primeros proyectos antes de 2021 - retomado en 2026",
+      "summary": "En 2026 retomé el trabajo independiente para construir una práctica propia alrededor de sitios, experiencias, aplicaciones y sistemas digitales a medida.",
+      "responsibilities": [
+        "Dirección creativa y desarrollo frontend",
+        "Aplicaciones web y móviles",
+        "Backend, integraciones e infraestructura",
+        "Ecommerce y herramientas de personalización",
+        "Implementación, despliegue y acompañamiento técnico"
+      ],
+      "cvResponsibilities": [
+        "Práctica independiente retomada en 2026, después de una primera etapa de proyectos anterior a Ludik.",
+        "Sitios, experiencias interactivas, aplicaciones web y móviles para clientes y equipos remotos.",
+        "Dirección visual, frontend, backend, integraciones, infraestructura y acompañamiento técnico según el proyecto."
+      ]
+    }
+  ],
+  "selectedProjects": [
+    {
+      "name": "Kené Conexiones",
+      "role": "Frontend e interacción",
+      "description": "Documental interactivo cultural con recorridos audiovisuales ramificados y una galería de experiencias VR.",
+      "technologies": "React, Gatsby"
+    },
+    {
+      "name": "GHS",
+      "role": "WordPress y frontend",
+      "description": "Rediseño y migración headless, manteniendo WordPress como CMS y exponiendo el contenido mediante GraphQL.",
+      "technologies": "WordPress, Astro, GraphQL"
+    },
+    {
+      "name": "Kollana",
+      "role": "Diseño y desarrollo integral",
+      "description": "Aplicación móvil y marketplace de servicios con pagos, geolocalización, panel administrativo y backend propio.",
+      "technologies": "Vue, Capacitor, Supabase, PostgreSQL/PostGIS"
+    },
+    {
+      "name": "PNP 24/7",
+      "role": "Backend, panel e infraestructura",
+      "description": "Sistema de alertas en tiempo real conectado con comisarías, agentes, mapas operativos y sirenas físicas.",
+      "technologies": "Laravel, Firebase, PostgreSQL/PostGIS, Docker"
+    }
+  ],
+  "education": [
+    {
+      "institution": "SENATI - Pucallpa",
+      "program": "Desarrollo de Software",
+      "period": "2018 - 2021",
+      "status": "Egresado"
+    }
+  ],
+  "skills": [
+    {
+      "label": "Frontend e interacción",
+      "items": "Astro, Vue, Nuxt, React, Gatsby, JavaScript/TypeScript, Canvas, SVG"
+    },
+    {
+      "label": "Backend y datos",
+      "items": "Laravel, Supabase, Firebase, PostgreSQL/PostGIS, APIs, sistemas en tiempo real"
+    },
+    {
+      "label": "CMS e infraestructura",
+      "items": "WordPress a medida, GraphQL, Cloudflare, Docker, AWS, Linux/VPS"
+    },
+    {
+      "label": "Práctica",
+      "items": "Dirección visual, arquitectura, lógica de negocio, lanzamientos, coordinación con clientes"
+    }
+  ]
+}

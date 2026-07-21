@@ -1,0 +1,92 @@
+---
+import { getCollection } from "astro:content";
+import ProjectLayout from "@layouts/ProjectLayout.astro";
+import ProjectHero from "@components/projects/ProjectHero.astro";
+import ProjectMetadata from "@components/projects/ProjectMetadata.astro";
+import ProjectSection from "@components/projects/ProjectSection.astro";
+import ProjectNavigation from "@components/projects/ProjectNavigation.astro";
+import { experience } from "@data/experience";
+import { resolveCollaborators } from "@data/collaborators";
+
+export async function getStaticPaths() {
+  const projects = (await getCollection("projects"))
+    .filter((project) => project.data.published)
+    .sort((a, b) => (b.data.year ?? 0) - (a.data.year ?? 0));
+
+  return projects.map((project, index) => {
+    const previous = projects[index - 1];
+    const next = projects[index + 1];
+    return {
+      params: { slug: project.id },
+      props: {
+        project,
+        previous: previous ? { id: previous.id, title: previous.data.title } : undefined,
+        next: next ? { id: next.id, title: next.data.title } : undefined,
+      },
+    };
+  });
+}
+
+const { project, previous, next } = Astro.props;
+const data = project.data;
+const displayTitle = [data.title, data.variant].filter(Boolean).join(" / ");
+const projectExperience = experience.find((item) => item.id === data.experienceId);
+const projectCollaborators = resolveCollaborators(data.collaborators);
+const approvedCollaborators = projectCollaborators.filter(
+  ({ collaborator }) => collaborator.consent === "approved",
+);
+
+const projectSchema = {
+  "@context": "https://schema.org",
+  "@type": "CreativeWork",
+  name: displayTitle,
+  description: data.description,
+  creator: {
+    "@type": "Person",
+    name: "Francis Del Castillo",
+  },
+  contributor: approvedCollaborators.map(({ collaborator }) => ({
+    "@type": "Person",
+    name: collaborator.name,
+  })),
+  genre: data.category,
+};
+---
+
+<ProjectLayout title={displayTitle} description={data.summary ?? data.description} image={data.cover}>
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(projectSchema)} />
+  <ProjectHero
+    title={data.title}
+    variant={data.variant}
+    category={data.category}
+    role={data.role}
+    status={data.status}
+    description={data.description}
+    cover={data.cover}
+    gallery={data.gallery}
+    caseStudyReady={data.caseStudyReady}
+  />
+  <section class="project-content">
+    <div class="project-main">
+      {!data.caseStudyReady && (
+        <p class="case-study-note" data-reveal>El caso de estudio completo se encuentra en preparación.</p>
+      )}
+      <ProjectSection title="Aportes" items={data.responsibilities} />
+      <ProjectSection title="Reto" items={data.challenges} />
+      <ProjectSection title="Solución" items={data.solution} />
+      <ProjectSection title="Resultados" items={data.results} />
+    </div>
+    <ProjectMetadata
+      technologies={data.technologies}
+      participation={data.participation}
+      collaborationNote={data.collaborationNote}
+      experience={projectExperience}
+      contextDescription={data.contextDescription}
+      collaborators={approvedCollaborators}
+      archiveNote={data.archiveNote}
+      disclaimer={data.disclaimer}
+      externalUrl={data.externalUrl}
+    />
+  </section>
+  <ProjectNavigation previous={previous} next={next} />
+</ProjectLayout>

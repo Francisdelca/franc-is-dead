@@ -1,0 +1,23 @@
+---
+import ProjectList from "@components/projects/ProjectList.astro";
+
+interface Props {
+  projects: any[];
+}
+
+const { projects } = Astro.props;
+---
+
+<section class="work-section" id="projects" aria-labelledby="projects-title">
+  <div class="section-label" data-reveal>
+    <span>02</span>
+    <span>Casos de estudio destacados</span>
+  </div>
+  <div class="work-heading">
+    <h2 id="projects-title" data-reveal>Trabajo seleccionado para publicar ahora y ampliar después.</h2>
+    <p data-reveal>
+      La primera versión muestra información resumida, estados claros y notas de colaboración cuando corresponden. Los casos completos pueden crecer sin rehacer la estructura.
+    </p>
+  </div>
+  <ProjectList projects={projects} />
+</section>

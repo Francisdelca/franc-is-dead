@@ -1,0 +1,38 @@
+---
+import type { DotShape } from "@components/shared/MorphingDots.astro";
+
+interface Props {
+  index: number;
+  id: string;
+  theme?: "dark" | "light" | "cyan" | "blood";
+  class?: string;
+  headerShape?: DotShape;
+  reveal?: "base" | "split" | "circle" | "rise" | "iris";
+}
+
+const {
+  index,
+  id,
+  theme = "dark",
+  class: className = "",
+  headerShape,
+  reveal = "base",
+} = Astro.props;
+---
+
+<section
+  class:list={["home-slide", `home-slide--${theme}`, className]}
+  id={id}
+  data-slide-index={index}
+  data-slide-theme={theme}
+  data-header-shape={headerShape}
+  data-scene-transition={reveal}
+  aria-label={`Diapositiva ${index + 1}`}
+>
+  <div class="home-slide__backdrop" data-scene-backdrop data-scene-reveal={reveal} aria-hidden="true">
+    <span class="home-slide__shine" data-scene-shine></span>
+  </div>
+  <div class="home-slide__content">
+    <slot />
+  </div>
+</section>

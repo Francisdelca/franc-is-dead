@@ -1,0 +1,33 @@
+---
+import type { DotShape } from "./MorphingDots.astro";
+
+interface Props {
+  mode?: "full" | "signature";
+  shape?: DotShape;
+  class?: string;
+  isHeader?: boolean;
+}
+
+const {
+  mode = "full",
+  shape = "signature",
+  class: className = "",
+  isHeader = false,
+} = Astro.props;
+---
+
+<span
+  class:list={["brand-logo", mode === "signature" && "brand-logo--signature", className]}
+  aria-label="franc.is.dead"
+  data-logo={mode === "full" ? true : undefined}
+  data-logo-mode={mode}
+  data-shape={shape}
+  data-header-logo={isHeader ? "" : undefined}
+>
+  <span class="brand-logo__line brand-logo__line--name">
+    <span class="brand-logo__word brand-logo__word--franc">franc</span><span class="brand-logo__dot" data-dot="0">.</span><span class="brand-logo__is">is</span><span class="brand-logo__dot" data-dot="1">.</span><span class="brand-logo__word brand-logo__word--dead">dead</span>
+  </span>
+  <span class="brand-logo__line brand-logo__line--dots" aria-hidden="true">
+    <span class="brand-logo__word brand-logo__word--franc">franc</span><span class="brand-logo__dot" data-dot="2">.</span><span class="brand-logo__is">is</span><span class="brand-logo__dot" data-dot="3">.</span><span class="brand-logo__is">is</span><span class="brand-logo__dot" data-dot="4">.</span>
+  </span>
+</span>

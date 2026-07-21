@@ -1,0 +1,66 @@
+---
+import ProjectStatus from "./ProjectStatus.astro";
+import TechnologyIcon from "@components/shared/TechnologyIcon.astro";
+import type { TechnologyId } from "@data/technologies";
+
+interface Props {
+  project: {
+    id: string;
+    data: {
+      title: string;
+      variant?: string;
+      year?: number;
+      category: string;
+      role: string;
+      status: string;
+      summary?: string;
+      description: string;
+      technologies: TechnologyId[];
+      cover?: string;
+      thumbnail?: string;
+      gallery?: Array<{
+        src: string;
+        label: string;
+        alt: string;
+        orientation: "landscape" | "portrait";
+      }>;
+      caseStudyReady: boolean;
+    };
+  };
+  index: number;
+}
+
+const { project, index } = Astro.props;
+const name = [project.data.title, project.data.variant].filter(Boolean).join(" / ");
+const number = String(index + 1).padStart(2, "0");
+const previewImage = project.data.gallery?.[0]?.src ?? project.data.thumbnail ?? project.data.cover;
+---
+
+<a
+  class="project-row"
+  href={`/projects/${project.id}/`}
+  data-project-preview-item
+  data-project-preview-src={previewImage}
+  data-project-preview-number={number}
+  data-project-preview-title={name}
+>
+  <span>{number}</span>
+  <strong>{name}</strong>
+  {previewImage && (
+    <figure class="project-row__media" aria-hidden="true">
+      <img src={previewImage} alt="" loading="lazy" />
+    </figure>
+  )}
+  <em>
+    {project.data.category}
+    {project.data.year ? ` / ${project.data.year}` : ""}
+    {project.data.technologies.length > 0 && (
+      <span class="project-row__technologies" aria-label="Tecnologías principales">
+        {project.data.technologies.map((technology) => (
+          <TechnologyIcon id={technology} size="compact" />
+        ))}
+      </span>
+    )}
+    <ProjectStatus status={project.data.status} caseStudyReady={project.data.caseStudyReady} />
+  </em>
+</a>

@@ -1,0 +1,32 @@
+---
+interface Props {
+  variant?: "default" | "nav" | "signature";
+  activeIndex?: number;
+  class?: string;
+}
+
+const { variant = "default", activeIndex = -1, class: className = "" } = Astro.props;
+const dots = [0, 1, 2, 3, 4];
+---
+
+{
+  variant === "nav" ? (
+    <span class:list={["five-dots", "five-dots--nav", className]} aria-hidden="true">
+      {dots.map((i) => (
+        <span class={i === activeIndex ? "is-active" : ""} data-dot-index={i} />
+      ))}
+    </span>
+  ) : variant === "signature" ? (
+    <span class:list={["five-dots", "five-dots--signature", className]} aria-hidden="true">
+      {dots.map((i) => (
+        <span data-dot-index={i} />
+      ))}
+    </span>
+  ) : (
+    <span class:list={["five-dots", className]} aria-hidden="true">
+      {dots.map((i) => (
+        <span data-dot-index={i} />
+      ))}
+    </span>
+  )
+}

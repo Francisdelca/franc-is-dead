@@ -1,0 +1,19 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import ContactCTA from "@components/home/ContactCTA.astro";
+---
+
+<BaseLayout
+  title="Contacto | Francis Del Castillo"
+  description="Contacto de Francis Del Castillo para oportunidades laborales, colaboraciones y proyectos web."
+  canonicalPath="/contact/"
+>
+  <section class="page-hero" aria-labelledby="contact-page-title">
+    <p class="eyebrow" data-reveal>Contacto</p>
+    <h1 id="contact-page-title" data-split>Disponible para construir a distancia.</h1>
+    <p data-reveal>
+      Proyectos freelance, colaboraciones y oportunidades remotas en cualquier país hispanohablante.
+    </p>
+  </section>
+  <ContactCTA />
+</BaseLayout>

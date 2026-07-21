@@ -1,0 +1,251 @@
+---
+import ProjectStatus from "./ProjectStatus.astro";
+import Icon from "@components/shared/Icon.astro";
+
+interface Props {
+  title: string;
+  variant?: string;
+  category: string;
+  role: string;
+  status: string;
+  description: string;
+  cover?: string;
+  gallery?: Array<{
+    src: string;
+    label: string;
+    alt: string;
+    orientation: "landscape" | "portrait";
+  }>;
+  caseStudyReady: boolean;
+}
+
+const {
+  title,
+  variant,
+  category,
+  role,
+  status,
+  description,
+  cover,
+  gallery = [],
+  caseStudyReady,
+} = Astro.props;
+const displayTitle = [title, variant].filter(Boolean).join(" / ");
+const hasCollage = gallery.length > 0;
+
+const getStackLayout = (index: number) => {
+  const angle = ((index * 137.508) + 218) * (Math.PI / 180);
+  const distance = Math.sqrt(index + 1);
+  const radiusX = Math.min(30, 17 * distance);
+  const radiusY = Math.min(18, 8.5 * distance);
+
+  return {
+    left: 50 + (Math.cos(angle) * radiusX),
+    top: 36 + (Math.sin(angle) * radiusY),
+    desktopWidth: Math.max(25, 36 - (distance * 2.4)),
+    mobileWidth: Math.max(34, 52 - (distance * 3.2)),
+    zIndex: Math.max(2, 9 - index),
+  };
+};
+---
+
+<section
+  class:list={["project-hero", { "project-hero--collage": hasCollage }]}
+  aria-labelledby="project-title"
+  data-project-collage={hasCollage ? "" : undefined}
+>
+  <div class="project-hero__copy">
+    <p class="eyebrow" data-reveal>{category}</p>
+    <h1 id="project-title" data-split>{displayTitle}</h1>
+    <p data-reveal>{description}</p>
+    <dl class="project-meta-strip" data-reveal>
+      <div>
+        <dt>Rol</dt>
+        <dd>{role}</dd>
+      </div>
+      <div>
+        <dt>Estado</dt>
+        <dd><ProjectStatus status={status} caseStudyReady={caseStudyReady} /></dd>
+      </div>
+    </dl>
+  </div>
+  {hasCollage ? (
+    <div class="project-collage" aria-label={`Capturas de ${displayTitle}`} data-collage-stage>
+      <div class="project-collage__surface" aria-hidden="true"></div>
+      {gallery.map((image, index) => (
+        (() => {
+          const stack = getStackLayout(Math.max(0, index - 1));
+          const stackStyle = index === 0 ? undefined : [
+            `--folio-left: ${stack.left.toFixed(2)}%`,
+            `--folio-top: ${stack.top.toFixed(2)}%`,
+            `--folio-width-desktop: ${stack.desktopWidth.toFixed(2)}vw`,
+            `--folio-width-mobile: ${stack.mobileWidth.toFixed(2)}vw`,
+            `--folio-z: ${stack.zIndex}`,
+          ].join(";");
+
+          return (
+        <button
+          class="project-collage__folio"
+          type="button"
+          aria-label={`Mostrar ${image.label}`}
+          aria-pressed={index === 0 ? "true" : "false"}
+          data-collage-card={index}
+          data-collage-slot={index === 0 ? "active" : "stack"}
+          data-orientation={image.orientation}
+          style={stackStyle}
+        >
+          <img src={image.src} alt={image.alt} loading={index === 0 ? "eager" : "lazy"} />
+        </button>
+          );
+        })()
+      ))}
+      <div class="project-collage__controls" aria-label="Navegación de capturas">
+        <button type="button" aria-label="Captura anterior" data-collage-previous>
+          <Icon name="arrow-left" />
+        </button>
+        <span class="project-collage__counter" aria-live="polite" data-collage-counter>
+          1 / {gallery.length}
+        </span>
+        <button type="button" aria-label="Captura siguiente" data-collage-next>
+          <Icon name="arrow-right" />
+        </button>
+      </div>
+      <dialog class="project-lightbox" aria-label={`Galería ampliada de ${displayTitle}`} data-collage-lightbox>
+        <button class="project-lightbox__close" type="button" aria-label="Cerrar galería" data-lightbox-close>
+          <Icon name="x" />
+        </button>
+        <div class="project-lightbox__stage">
+          {gallery.map((image, index) => (
+            <figure
+              class="project-lightbox__image"
+              data-lightbox-image={index}
+              hidden={index !== 0}
+            >
+              <img src={image.src} alt={image.alt} loading="lazy" />
+            </figure>
+          ))}
+        </div>
+        <button class="project-lightbox__previous" type="button" aria-label="Imagen anterior" data-lightbox-previous>
+          <Icon name="arrow-left" />
+        </button>
+        <span class="project-lightbox__counter" aria-live="polite" data-lightbox-counter>1 / {gallery.length}</span>
+        <button class="project-lightbox__next" type="button" aria-label="Imagen siguiente" data-lightbox-next>
+          <Icon name="arrow-right" />
+        </button>
+      </dialog>
+    </div>
+  ) : (
+    <figure class="project-hero__media" data-reveal>
+      {cover ? (
+        <img src={cover} alt={`Imagen de referencia para ${displayTitle}`} loading="eager" />
+      ) : (
+        <div class="project-placeholder" aria-label={`Imagen pendiente para ${displayTitle}`}>{displayTitle}</div>
+      )}
+    </figure>
+  )}
+</section>
+
+{hasCollage && (
+  <script>
+    document.querySelectorAll<HTMLElement>("[data-project-collage]").forEach((hero) => {
+      if (hero.dataset.collageBound === "true") return;
+
+      const cards = Array.from(hero.querySelectorAll<HTMLButtonElement>("[data-collage-card]"));
+      const previous = hero.querySelector<HTMLButtonElement>("[data-collage-previous]");
+      const next = hero.querySelector<HTMLButtonElement>("[data-collage-next]");
+      const counter = hero.querySelector<HTMLElement>("[data-collage-counter]");
+      const lightbox = hero.querySelector<HTMLDialogElement>("[data-collage-lightbox]");
+      const lightboxImages = Array.from(hero.querySelectorAll<HTMLElement>("[data-lightbox-image]"));
+      const lightboxPrevious = hero.querySelector<HTMLButtonElement>("[data-lightbox-previous]");
+      const lightboxNext = hero.querySelector<HTMLButtonElement>("[data-lightbox-next]");
+      const lightboxClose = hero.querySelector<HTMLButtonElement>("[data-lightbox-close]");
+      const lightboxCounter = hero.querySelector<HTMLElement>("[data-lightbox-counter]");
+
+      if (cards.length === 0 || !previous || !next) return;
+      hero.dataset.collageBound = "true";
+      let activeIndex = 0;
+      let lightboxIndex = 0;
+      let previousOverflow = "";
+
+      const stackProperties = [
+        "--folio-left",
+        "--folio-top",
+        "--folio-width-desktop",
+        "--folio-width-mobile",
+        "--folio-z",
+      ];
+
+      const activate = (index: number) => {
+        const nextIndex = (index + cards.length) % cards.length;
+        if (nextIndex === activeIndex) return;
+
+        const previousCard = cards[activeIndex];
+        const nextCard = cards[nextIndex];
+
+        stackProperties.forEach((property) => {
+          previousCard.style.setProperty(property, nextCard.style.getPropertyValue(property));
+          nextCard.style.removeProperty(property);
+        });
+
+        activeIndex = nextIndex;
+
+        cards.forEach((card, cardIndex) => {
+          card.dataset.collageSlot = cardIndex === activeIndex ? "active" : "stack";
+          card.setAttribute("aria-pressed", String(cardIndex === activeIndex));
+        });
+
+        if (counter) {
+          counter.textContent = `${activeIndex + 1} / ${cards.length}`;
+        }
+      };
+
+      const updateLightbox = (index: number) => {
+        lightboxIndex = (index + lightboxImages.length) % lightboxImages.length;
+        lightboxImages.forEach((image, imageIndex) => {
+          image.hidden = imageIndex !== lightboxIndex;
+        });
+        if (lightboxCounter) lightboxCounter.textContent = `${lightboxIndex + 1} / ${lightboxImages.length}`;
+      };
+
+      const openLightbox = (index: number) => {
+        if (!lightbox || lightboxImages.length === 0) return;
+        updateLightbox(index);
+        previousOverflow = document.documentElement.style.overflow;
+        document.documentElement.style.overflow = "hidden";
+        lightbox.showModal();
+      };
+
+      const closeLightbox = () => {
+        if (!lightbox?.open) return;
+        lightbox.close();
+      };
+
+      cards.forEach((card, index) => card.addEventListener("click", () => {
+        if (index === activeIndex) openLightbox(index);
+        else activate(index);
+      }));
+      previous.addEventListener("click", () => activate(activeIndex - 1));
+      next.addEventListener("click", () => activate(activeIndex + 1));
+      lightboxPrevious?.addEventListener("click", () => updateLightbox(lightboxIndex - 1));
+      lightboxNext?.addEventListener("click", () => updateLightbox(lightboxIndex + 1));
+      lightboxClose?.addEventListener("click", closeLightbox);
+      lightbox?.addEventListener("click", (event) => {
+        if (event.target === lightbox) closeLightbox();
+      });
+      lightbox?.addEventListener("close", () => {
+        document.documentElement.style.overflow = previousOverflow;
+        cards[activeIndex]?.focus({ preventScroll: true });
+      });
+      lightbox?.addEventListener("keydown", (event) => {
+        if (event.key === "ArrowLeft") updateLightbox(lightboxIndex - 1);
+        if (event.key === "ArrowRight") updateLightbox(lightboxIndex + 1);
+      });
+
+      hero.addEventListener("keydown", (event) => {
+        if (lightbox?.open) return;
+        if (event.key === "ArrowLeft") activate(activeIndex - 1);
+        if (event.key === "ArrowRight") activate(activeIndex + 1);
+      });
+    });
+  </script>
+)}

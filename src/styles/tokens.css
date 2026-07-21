@@ -1,0 +1,18 @@
+:root {
+  color-scheme: dark;
+  --ink: #151518;
+  --ink-deep: #0e0e10;
+  --bone: #f5f5f2;
+  --bone-soft: #d9d8d1;
+  --steel: #41434d;
+  --blood: #5a0611;
+  --cyanotype: #1e6384;
+  --wood: #b98b4b;
+  --line: rgba(245, 245, 242, 0.16);
+  --muted: rgba(245, 245, 242, 0.66);
+  --shadow: rgba(0, 0, 0, 0.42);
+  --font-sans: Avenir, "Avenir Next", "Helvetica Neue", Arial, sans-serif;
+  --space-page: clamp(20px, 3vw, 36px);
+  --content-width: 1440px;
+  --transition-default: 180ms ease;
+}

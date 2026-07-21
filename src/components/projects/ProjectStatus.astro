@@ -1,0 +1,12 @@
+---
+interface Props {
+  status: string;
+  caseStudyReady?: boolean;
+}
+
+const { status, caseStudyReady = false } = Astro.props;
+---
+
+<span class:list={["project-status", !caseStudyReady && "project-status--pending"]}>
+  {status}
+</span>

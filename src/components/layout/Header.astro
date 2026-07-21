@@ -1,0 +1,20 @@
+---
+import BrandLogo from "@components/shared/BrandLogo.astro";
+import type { DotShape } from "@components/shared/MorphingDots.astro";
+import Navigation from "./Navigation.astro";
+import MobileNavigation from "./MobileNavigation.astro";
+
+interface Props {
+  dotShape?: DotShape;
+}
+
+const { dotShape = "signature" } = Astro.props;
+---
+
+<header class="site-header" data-site-header>
+  <a class="header-logo is-expanded" href="/" aria-label="Inicio franc.is.dead" data-header-logo-link>
+    <BrandLogo shape={dotShape} isHeader />
+  </a>
+  <Navigation />
+  <MobileNavigation />
+</header>

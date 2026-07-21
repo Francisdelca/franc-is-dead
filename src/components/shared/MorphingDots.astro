@@ -1,0 +1,46 @@
+---
+export type DotShape =
+  | "signature"
+  | "f"
+  | "spider"
+  | "billiard"
+  | "constellation"
+  | "arrow"
+  | "dice"
+  | "face"
+  | "circuit"
+  | "question"
+  | "x"
+  | "circle";
+
+interface Props {
+  shape?: DotShape;
+  size?: "sm" | "md" | "lg" | "xl";
+  accentIndex?: number;
+  class?: string;
+  label?: string;
+  isHeader?: boolean;
+}
+
+const {
+  shape = "signature",
+  size = "md",
+  accentIndex = -1,
+  class: className = "",
+  label = "franc.is.dead",
+  isHeader = false,
+} = Astro.props;
+---
+
+<span
+  class:list={["morphing-dots", `morphing-dots--${size}`, className]}
+  data-shape={shape}
+  data-morphing-dots
+  data-header-logo={isHeader ? "" : undefined}
+  aria-label={label}
+  role="img"
+>
+  {Array.from({ length: 5 }).map((_, i) => (
+    <span class={i === accentIndex ? "is-accent" : ""} data-dot={i} />
+  ))}
+</span>

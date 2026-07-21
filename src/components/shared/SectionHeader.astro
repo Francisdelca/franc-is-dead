@@ -1,0 +1,22 @@
+---
+interface Props {
+  index: string;
+  label: string;
+  title?: string;
+  copy?: string;
+  id?: string;
+}
+
+const { index, label, title, copy, id } = Astro.props;
+---
+
+<div class="section-label" data-reveal>
+  <span>{index}</span>
+  <span>{label}</span>
+</div>
+{title && (
+  <div class="section-heading">
+    <h2 id={id} data-reveal>{title}</h2>
+    {copy && <p data-reveal>{copy}</p>}
+  </div>
+)}

@@ -1,0 +1,236 @@
+.inline-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  list-style: none;
+  margin: 16px 0 0;
+  padding: 0;
+}
+
+.inline-list li,
+.tag {
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  color: var(--bone-soft);
+  font-size: 0.78rem;
+  line-height: 1;
+  padding: 9px 11px;
+}
+
+.inline-list--soft li,
+.tag--muted {
+  border-color: rgba(245, 245, 242, 0.1);
+  color: var(--muted);
+}
+
+/* Five dots system -------------------------------------------------------- */
+
+.five-dots {
+  display: grid;
+  grid-template-columns: repeat(3, 0.34em);
+  gap: 0.3em;
+  width: max-content;
+  color: currentColor;
+}
+
+.five-dots span {
+  width: 0.34em;
+  height: 0.34em;
+  background: currentColor;
+  border-radius: 50%;
+  transition:
+    transform 420ms cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 300ms ease,
+    background-color 300ms ease;
+}
+
+.five-dots span:nth-child(1) {
+  grid-column: 1;
+}
+
+.five-dots span:nth-child(2) {
+  grid-column: 2;
+}
+
+.five-dots span:nth-child(3) {
+  grid-column: 1;
+}
+
+.five-dots span:nth-child(4) {
+  grid-column: 2;
+}
+
+.five-dots span:nth-child(5) {
+  grid-column: 3;
+}
+
+/* Nav variant: vertical dots --------------------------------------------- */
+
+.five-dots--nav {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.72em;
+}
+
+.five-dots--nav span {
+  width: 0.42em;
+  height: 0.42em;
+  opacity: 0.28;
+}
+
+.five-dots--nav span.is-active {
+  opacity: 1;
+  transform: scale(1.45);
+}
+
+/* Signature variant: horizontal dots ------------------------------------- */
+
+.five-dots--signature {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.42em;
+}
+
+.five-dots--signature span {
+  width: 0.32em;
+  height: 0.32em;
+}
+
+/* Morphing dots system ---------------------------------------------------- */
+
+.morphing-dots {
+  position: relative;
+  display: inline-block;
+  vertical-align: middle;
+  flex-shrink: 0;
+}
+
+.morphing-dots span {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0.34em;
+  height: 0.34em;
+  background: currentColor;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition:
+    top 620ms cubic-bezier(0.22, 1, 0.36, 1),
+    left 620ms cubic-bezier(0.22, 1, 0.36, 1),
+    width 620ms cubic-bezier(0.22, 1, 0.36, 1),
+    height 620ms cubic-bezier(0.22, 1, 0.36, 1),
+    background-color 620ms cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 420ms ease;
+}
+
+.morphing-dots span.is-accent {
+  width: 0.5em;
+  height: 0.5em;
+  background: var(--blood);
+}
+
+.morphing-dots--sm {
+  width: 1.6em;
+  height: 1.6em;
+  font-size: 1rem;
+}
+
+.morphing-dots--md {
+  width: 4em;
+  height: 4em;
+  font-size: 1rem;
+}
+
+.morphing-dots--lg {
+  width: 8em;
+  height: 8em;
+  font-size: 1rem;
+}
+
+.morphing-dots--xl {
+  width: 14em;
+  height: 14em;
+  font-size: 1rem;
+}
+
+/* signature: five dots in a calm horizontal line ------------------------- */
+
+.morphing-dots[data-shape="signature"] span:nth-child(1) { top: 50%; left: 10%; }
+.morphing-dots[data-shape="signature"] span:nth-child(2) { top: 50%; left: 30%; }
+.morphing-dots[data-shape="signature"] span:nth-child(3) { top: 50%; left: 50%; }
+.morphing-dots[data-shape="signature"] span:nth-child(4) { top: 50%; left: 70%; }
+.morphing-dots[data-shape="signature"] span:nth-child(5) { top: 50%; left: 90%; }
+
+/* f: the five dots rotated into an F (about me) -------------------------- */
+
+.morphing-dots[data-shape="f"] span:nth-child(1) { top: 12%; left: 22%; }
+.morphing-dots[data-shape="f"] span:nth-child(2) { top: 12%; left: 62%; }
+.morphing-dots[data-shape="f"] span:nth-child(3) { top: 46%; left: 22%; }
+.morphing-dots[data-shape="f"] span:nth-child(4) { top: 46%; left: 62%; }
+.morphing-dots[data-shape="f"] span:nth-child(5) { top: 80%; left: 22%; }
+
+/* spider: a centered body with four legs --------------------------------- */
+
+.morphing-dots[data-shape="spider"] span:nth-child(1) { top: 50%; left: 50%; width: 0.42em; height: 0.42em; }
+.morphing-dots[data-shape="spider"] span:nth-child(2) { top: 18%; left: 18%; }
+.morphing-dots[data-shape="spider"] span:nth-child(3) { top: 18%; left: 82%; }
+.morphing-dots[data-shape="spider"] span:nth-child(4) { top: 82%; left: 18%; }
+.morphing-dots[data-shape="spider"] span:nth-child(5) { top: 82%; left: 82%; }
+
+/* billiard: cue ball + cue stick ----------------------------------------- */
+
+.morphing-dots[data-shape="billiard"] span:nth-child(1) { top: 78%; left: 28%; width: 0.52em; height: 0.52em; background: var(--bone); }
+.morphing-dots[data-shape="billiard"] span:nth-child(2) { top: 24%; left: 54%; }
+.morphing-dots[data-shape="billiard"] span:nth-child(3) { top: 34%; left: 62%; }
+.morphing-dots[data-shape="billiard"] span:nth-child(4) { top: 44%; left: 70%; }
+.morphing-dots[data-shape="billiard"] span:nth-child(5) { top: 54%; left: 78%; }
+
+/* constellation: scattered organic rhythm -------------------------------- */
+
+.morphing-dots[data-shape="constellation"] span:nth-child(1) { top: 18%; left: 22%; }
+.morphing-dots[data-shape="constellation"] span:nth-child(2) { top: 34%; left: 72%; }
+.morphing-dots[data-shape="constellation"] span:nth-child(3) { top: 52%; left: 38%; }
+.morphing-dots[data-shape="constellation"] span:nth-child(4) { top: 72%; left: 66%; }
+.morphing-dots[data-shape="constellation"] span:nth-child(5) { top: 84%; left: 26%; }
+
+/* arrow: pointing up-right ----------------------------------------------- */
+
+.morphing-dots[data-shape="arrow"] span:nth-child(1) { top: 78%; left: 22%; }
+.morphing-dots[data-shape="arrow"] span:nth-child(2) { top: 62%; left: 38%; }
+.morphing-dots[data-shape="arrow"] span:nth-child(3) { top: 46%; left: 54%; }
+.morphing-dots[data-shape="arrow"] span:nth-child(4) { top: 30%; left: 70%; }
+.morphing-dots[data-shape="arrow"] span:nth-child(5) { top: 18%; left: 78%; }
+
+/* dice: the five face of a die ------------------------------------------- */
+
+.morphing-dots[data-shape="dice"] span:nth-child(1) { top: 22%; left: 22%; }
+.morphing-dots[data-shape="dice"] span:nth-child(2) { top: 22%; left: 78%; }
+.morphing-dots[data-shape="dice"] span:nth-child(3) { top: 50%; left: 50%; width: 0.42em; height: 0.42em; }
+.morphing-dots[data-shape="dice"] span:nth-child(4) { top: 78%; left: 22%; }
+.morphing-dots[data-shape="dice"] span:nth-child(5) { top: 78%; left: 78%; }
+
+/* face: two eyes, a nose and a subtle mouth ------------------------------ */
+
+.morphing-dots[data-shape="face"] span:nth-child(1) { top: 32%; left: 28%; }
+.morphing-dots[data-shape="face"] span:nth-child(2) { top: 32%; left: 72%; }
+.morphing-dots[data-shape="face"] span:nth-child(3) { top: 50%; left: 50%; }
+.morphing-dots[data-shape="face"] span:nth-child(4) { top: 72%; left: 36%; }
+.morphing-dots[data-shape="face"] span:nth-child(5) { top: 72%; left: 64%; }
+
+/* circuit: connected nodes ----------------------------------------------- */
+
+.morphing-dots[data-shape="circuit"] span:nth-child(1) { top: 50%; left: 18%; }
+.morphing-dots[data-shape="circuit"] span:nth-child(2) { top: 22%; left: 50%; }
+.morphing-dots[data-shape="circuit"] span:nth-child(3) { top: 50%; left: 50%; width: 0.42em; height: 0.42em; }
+.morphing-dots[data-shape="circuit"] span:nth-child(4) { top: 78%; left: 50%; }
+.morphing-dots[data-shape="circuit"] span:nth-child(5) { top: 50%; left: 82%; }
+
+/* question: a small question mark ---------------------------------------- */
+
+.morphing-dots[data-shape="question"] span:nth-child(1) { top: 24%; left: 34%; }
+.morphing-dots[data-shape="question"] span:nth-child(2) { top: 22%; left: 62%; }
+.morphing-dots[data-shape="question"] span:nth-child(3) { top: 44%; left: 68%; }
+.morphing-dots[data-shape="question"] span:nth-child(4) { top: 58%; left: 50%; }
+.morphing-dots[data-shape="question"] span:nth-child(5) { top: 82%; left: 50%; }
