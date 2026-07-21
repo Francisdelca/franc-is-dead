@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://franc.is.dead/sitemap-index.xml
+Sitemap: https://francis.delca.dev/sitemap-index.xml
