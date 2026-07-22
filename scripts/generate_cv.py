@@ -230,7 +230,7 @@ def build_pdf(data: dict) -> None:
             link(profile["email"], f"mailto:{profile['email']}"),
             link("linkedin.com/in/francisdead", profile["linkedin"]),
             link("github.com/Francisdelca", profile["github"]),
-            link("franc.is.dead", "https://franc.is.dead"),
+            link("francis.delca.dev", profile["portfolioUrl"]),
         ]
     )
     story.extend(
@@ -319,7 +319,7 @@ def build_pdf(data: dict) -> None:
         canvas.setFont("Helvetica", 6.8)
         canvas.setFillColor(MUTED)
         canvas.drawString(14 * mm, 4.5 * mm, "Francis Del Castillo - CV")
-        canvas.drawRightString(A4[0] - 14 * mm, 4.5 * mm, "franc.is.dead")
+        canvas.drawRightString(A4[0] - 14 * mm, 4.5 * mm, "francis.delca.dev")
         canvas.restoreState()
 
     doc.build(story, onFirstPage=draw_page, onLaterPages=draw_page)
